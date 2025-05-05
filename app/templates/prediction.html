@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suitability Prediction</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Suitability Prediction</h1>
+        <form action="/prediction/result" method="post">
+            <label for="precipitation">Precipitation (mm):</label>
+            <input type="number" step="0.1" id="precipitation" name="precipitation" placeholder="e.g., 400" required>
+            
+            <label for="temperature">Temperature (°C):</label>
+            <input type="number" step="0.1" id="temperature" name="temperature" placeholder="e.g., 25" required>
+            
+            <label for="solar_radiation">Solar Radiation (MJ/m²):</label>
+            <input type="number" step="0.1" id="solar_radiation" name="solar_radiation" placeholder="e.g., 20" required>
+            
+            <label for="soil_moisture">Soil Moisture (%):</label>
+            <input type="number" step="0.1" id="soil_moisture" name="soil_moisture" placeholder="e.g., 30" required>
+            
+            <label for="humidity">Humidity (%):</label>
+            <input type="number" step="0.1" id="humidity" name="humidity" placeholder="e.g., 60" required>
+            
+            <label for="drought_duration">Drought Duration (days):</label>
+            <input type="number" step="1" id="drought_duration" name="drought_duration" placeholder="e.g., 10" required>
+            
+            <label for="wue">Water Use Efficiency (g/mm):</label>
+            <input type="number" step="0.1" id="wue" name="wue" placeholder="e.g., 3.5" required>
+            
+            <label for="leaf_water_potential">Leaf Water Potential (MPa):</label>
+            <input type="number" step="0.1" id="leaf_water_potential" name="leaf_water_potential" placeholder="e.g., -1.2" required>
+            
+            <label for="stomatal_conductance">Stomatal Conductance (mol/m²/s):</label>
+            <input type="number" step="0.1" id="stomatal_conductance" name="stomatal_conductance" placeholder="e.g., 0.4" required>
+            
+            <label for="root_depth">Root Depth (cm):</label>
+            <input type="number" step="1" id="root_depth" name="root_depth" placeholder="e.g., 50" required>
+            
+            <label for="photosynthetic_rate">Photosynthetic Rate (µmol/m²/s):</label>
+            <input type="number" step="0.1" id="photosynthetic_rate" name="photosynthetic_rate" placeholder="e.g., 25" required>
+            
+            <label for="plant_biomass">Plant Biomass (g/m²):</label>
+            <input type="number" step="1" id="plant_biomass" name="plant_biomass" placeholder="e.g., 200" required>
+            
+            <label for="zmDREB2A">ZmDREB2A (0 or 1):</label>
+            <input type="number" step="1" id="zmDREB2A" name="zmDREB2A" placeholder="e.g., 1" required>
+            
+            <label for="root_QTL">Root QTL (0 or 1):</label>
+            <input type="number" step="1" id="root_QTL" name="root_QTL" placeholder="e.g., 0" required>
+            
+            <label for="zmNAC">ZmNAC (0 or 1):</label>
+            <input type="number" step="1" id="zmNAC" name="zmNAC" placeholder="e.g., 1" required>
+            
+            <label for="planting_density">Planting Density (plants/ha):</label>
+            <input type="number" step="1" id="planting_density" name="planting_density" placeholder="e.g., 60000" required>
+            
+            <button type="submit">Predict Suitability</button>
+        </form>
+    </div>
+</body>
+</html>
