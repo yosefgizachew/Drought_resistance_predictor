@@ -55,7 +55,7 @@ _, suggestion_accuracy = suggestion_model.evaluate(X_test_suggestion, y_test_sug
 print(f'Suggestion Model Accuracy: {suggestion_accuracy:.3f}')
 
 # Save the model
-suggestion_model.save('suggestion_model.h5')
+
 
 # Preprocessing for Prediction Dataset
 # Use the same features as suggestion but without 'Hybrid_ID'
