@@ -26,13 +26,6 @@ project/
 │   │   └── error.html                 # Error messages
 │   └── static/                        # Static files (CSS, JS, images)
 │
-├── models/
-│   ├── prediction_model.h5           # Trained regression model
-│   └── scaler.pkl                    # Scaler for feature normalization
-│
-├── data/
-│   └── crop_drought_resistance_prediction.csv  # Training dataset
-│
 ├── scripts/
 │   ├── preprocess_data.py            # Data preprocessing script
 │   └── train_model.py                # Model training script
