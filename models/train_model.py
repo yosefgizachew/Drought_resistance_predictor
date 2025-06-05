@@ -9,57 +9,16 @@ import matplotlib.pyplot as plt
 import joblib
 
 # Load datasets
-suggestion_data = pd.read_csv('../data-sets/crop_drought_resistance_suggestion.csv')  # Dataset for hybrid suggestion
 prediction_data = pd.read_csv('../data-sets/crop_drought_resistance_prediction.csv')  # Dataset for suitability prediction
 
 # Preprocessing for Suggestion Dataset
-suggestion_features = [
+prediction_features = [
     'Precipitation_mm', 'Temperature_C', 'Solar_Radiation_MJ_m2', 'Soil_Moisture_%',
     'Humidity_%', 'Drought_Duration_days', 'WUE_g_per_mm', 'Leaf_Water_Potential_MPa',
     'Stomatal_Conductance_mol_m2_s', 'Root_Depth_cm', 'Photosynthetic_Rate_umol_m2_s',
     'Plant_Biomass_g_m2', 'ZmDREB2A', 'Root_QTL', 'ZmNAC', 'Planting_Density_plants_ha'
 ]
-X_suggestion = suggestion_data[suggestion_features]
-y_suggestion = pd.get_dummies(suggestion_data['Hybrid_ID'])  # One-hot encoding for multi-class output
-
-# Standardize features
-scaler = StandardScaler()
-X_suggestion = scaler.fit_transform(X_suggestion)
-
-# Train-test split
-X_train_suggestion, X_test_suggestion, y_train_suggestion, y_test_suggestion = train_test_split(
-    X_suggestion, y_suggestion, test_size=0.2, random_state=42
-)
-
-# Build Neural Network for Suggestion
-suggestion_model = Sequential([
-    Dense(128, input_dim=X_suggestion.shape[1], activation='relu'),  # Input layer
-    Dropout(0.2),
-    Dense(64, activation='relu'),  # Hidden layer
-    Dropout(0.2),
-    Dense(y_suggestion.shape[1], activation='softmax')  # Output layer (softmax for multi-class)
-])
-
-suggestion_model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
-
-# Train the model with early stopping
-early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
-suggestion_history = suggestion_model.fit(
-    X_train_suggestion, y_train_suggestion,
-    validation_data=(X_test_suggestion, y_test_suggestion),
-    epochs=50, batch_size=32, callbacks=[early_stopping]
-)
-
-# Evaluate the model
-_, suggestion_accuracy = suggestion_model.evaluate(X_test_suggestion, y_test_suggestion)
-print(f'Suggestion Model Accuracy: {suggestion_accuracy:.3f}')
-
-# Save the model
-suggestion_model.save('suggestion_model.h5')
-
 # Preprocessing for Prediction Dataset
-# Use the same features as suggestion but without 'Hybrid_ID'
-prediction_features = suggestion_features
 X_prediction = prediction_data[prediction_features]
 y_prediction = prediction_data['Drought_Score']  # Use 'Drought_Score' as the target
 
@@ -97,17 +56,7 @@ print(f'Prediction Model Accuracy: {prediction_accuracy:.3f}')
 prediction_model.save('prediction_model.h5')
 
 # Example Input for Hybrid Suggestion
-suggestion_input = np.array([[400, 25, 20, 30, 60, 10, 3.5, -1.2, 0.4, 50, 25, 200, 1, 0, 1, 60000]])
-suggestion_input = scaler.transform(suggestion_input)
-
-# Predict Hybrid
-suggested_hybrid_prob = suggestion_model.predict(suggestion_input)
-suggested_hybrid = np.argmax(suggested_hybrid_prob)
-print(f'Recommended Hybrid Index: {suggested_hybrid}')
-
-# Example Input for Suitability Prediction
-# Use the same input but exclude 'Hybrid_ID'
-prediction_input = suggestion_input
+prediction_input = np.array([[400, 25, 20, 30, 60, 10, 3.5, -1.2, 0.4, 50, 25, 200, 1, 0, 1, 60000]])
 suitability_prob = prediction_model.predict(prediction_input)
 print(f'Suitability Probability: {suitability_prob[0][0]:.2f}')
 
@@ -139,8 +88,7 @@ def plot_training_history(history, model_name="model"):
         plt.savefig(f'{model_name}_accuracy.png')  # Save the accuracy plot as an image
         plt.show()
 
-# Generate plots for the suggestion model
-plot_training_history(suggestion_history, model_name="suggestion_model")
+
 # Generate plots for the prediction model
 plot_training_history(prediction_history, model_name="prediction_model")
 
