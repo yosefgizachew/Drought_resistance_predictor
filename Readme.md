@@ -23,7 +23,6 @@ project/
 │   ├── templates/
 │   │   ├── index.html                 # Input form
 │   │   ├── result.html                # Prediction result display
-│   │   └── error.html                 # Error messages
 │   └── static/                        # Static files (CSS, JS, images)
 │
 ├── scripts/
